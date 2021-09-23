@@ -1,0 +1,85 @@
+create database schoolModel;
+use  schoolModel;
+
+CREATE TABLE school(
+	schoolId int identity(1,1) not null,
+	schoolNumber int not null,
+	schoolName nvarchar(20) not null,
+	directorName nvarchar(20) not null,
+	budjet double not null,
+	costs double not null,
+	primary key(schoolId)
+);	
+
+CREATE TABLE classRoom(
+	classId int identity(1,1) not null,
+	schoolId int not null,
+	name nvarchar(20),
+	classLeader nvarchar(20),
+	primary key(classId)
+);
+
+
+CREATE TABLE teachers(
+	teacherId int identity(1,1) not null,
+	name nvarchar(20) not null,
+	address nvarchar(20) not null,
+	surName nvarchar(20) not null,
+	birthdate Date not null,
+	subjectName nvarchar(20) not null,
+	salary decimal not null,
+	primary key(teacherId)
+);
+
+CREATE TABLE students(
+	id int identity(1,1) not null,
+	name nvarchar(20) not null,
+	address nvarchar(20) not null,
+	surName nvarchar(20) not null,
+	birthdate Date not null,
+	rollNumber int not null,
+	avgGrade decimal not null,
+	classId int not null,
+	foreign key(classId) references classRoom(classId), 
+	 primary key(id)
+);
+
+CREATE TABLE classRoom_teachers(
+	teacherId int not null,
+	classId int not null,
+	foreign key(teacherId) references teachers(teacherId),
+	foreign key(classId) references classRoom(classId)
+);
+
+
+INSERT INTO school(schoolNumber,schoolName ,directorName,budjet ,costs ) VALUES(1,'lav','mard',150_000,30_000),
+		(schoolNumber,schoolName ,directorName,budjet ,costs ) VALUES(2,'vat','knikmard',250_000,50_000);
+
+INSERT INTO classRoom(name,classLeader) VALUES ('10a','Satenik'),
+						('10b','Varsenik');
+
+INSERT INTO teachers(name,address,surName,birthdate,subjectName,salary) 
+VALUES('Satenik','hayastan','kirakosyan','18-06-88','chemistry',50_000),
+	('Varsenik','hayastan','kirakosyan1','19-04-80','math',60_000),
+	('Satenik1','hayastan','kirakosyan2','15-07-77','chemistry',70_000),
+	('Varsenik2','hayastan','kirakosyan3','16-01-66','physic',80_000),
+	('Satenik2','hayastan','kirakosyan4','20-09-75','math',90_000),
+	('Varsenik2','hayastan','kirakosyan5','24-11-92','physic',100_000);
+
+INSERT INTO students(name,address,surName,birthdate,rollNumber,avgGrade,classId)
+VALUES('Ashot','dilijan','bdxkyan','24-12-95',1,8.5,1),
+	('Ashot1','dilijan','bdxkyan1','24-12-95',2,8.5,1),
+	('Ashot2','dilijan','bdxkyan2','14-11-95',3,4.5,1),
+	('Ashot3','dilijan','bdxkyan3','11-10-95',4,1.5,2),
+	('Ashot4','dilijan','bdxkyan4','17-09-95',5,9,2),
+	('Ashot5','dilijan','bdxkyan5','22-08-95',6,5,2);
+
+INSERT INTO classRoom_teachers(teacherID, classID)
+VALUES(1,1),
+	(2,1),
+	(3,1),
+	(4,2),
+	(5,2),
+	(6,2);
+
+
